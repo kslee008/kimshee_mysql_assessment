@@ -9,20 +9,19 @@ FROM users u JOIN progress p ON u.user_id = p.user_id;
 -- 2. What are the Top 25 schools (.edu domains)?
 -- Hint: use an aggregate function to COUNT() schools with most students
 -- ****************************************************************
-SELECT email_domain, COUNT(*) AS 'student_count'
+SELECT COUNT(email_domain) AS "Number of students", email_domain 
 FROM users
-WHERE email_domain LIKE '%.edu'
-GROUP BY 1
-ORDER BY 2 DESC
+GROUP BY email_domain
+ORDER BY COUNT(user_id) DESC
 LIMIT 25;
 
 -- 3. How many .edu learners are located in New York?
 -- Hint: use an aggregate function to COUNT() students in New York
 -- ****************************************************************
-SELECT COUNT(*) AS ny_edu_learners
-FROM users
-WHERE email_domain LIKE '%.edu'
-  AND city = 'New York';
+SELECT COUNT(user_id) AS "Number of students", city 
+FROM users 
+WHERE city = 'New York'
+GROUP BY city;
 
 -- 4. The mobile_app column contains either mobile-user or NULL. 
 -- How many of these learners are using the mobile app?
